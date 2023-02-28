@@ -1,12 +1,12 @@
 import streamlit as st
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
+#import matplotlib.pyplot as plt
+#import seaborn as sns
 from PIL import Image
 import pickle
 
-st.set_page_config(page_title="Group 8 Churn Prediction Project",layout="wide" )
+st.set_page_config(page_title="G8 Churn Prediction Project", layout="wide" )
 
 
 st.markdown(
@@ -14,7 +14,7 @@ st.markdown(
     <style>
 
     {
-       background: #ffff99; 
+       background: #0e7c8f; 
        background: -webkit-linear-gradient(to right, #ff0099, #493240); 
        background: linear-gradient(to right, #ff0099, #493240); 
     }
@@ -51,7 +51,7 @@ def add_bg_from_url():
 
 add_bg_from_url()
 #title text
-st.markdown("<h1 style='text-align: center; color: purple;'>Group 8</h1>", unsafe_allow_html=True)
+st.markdown("<h1 style='text-align: center; color: purple;'>G8</h1>", unsafe_allow_html=True)
 st.markdown("<h1 style='text-align: center; color: purple;'>Churn Prediction</h1>", unsafe_allow_html=True)
 
 
@@ -81,8 +81,6 @@ my_dict = {
     'promotion_last_5years':promotion
 }
 
-
-
 pt = pickle.load(open('power_transformer', 'rb'))
 column_trans=pickle.load(open('transformer','rb'))
 model = pickle.load(open('final_model', 'rb'))
@@ -96,10 +94,10 @@ if st.button("Predict"):
     X['time_spend_company'] = pt.transform(X[['time_spend_company']])
     X_trans = column_trans.transform(X)
     y_pred = model.predict(X_trans)
-    if str(y_pred[0])== 0:
-       st.success("Employee status: "+str(y_pred[0]))
-    else:
-       st.error("Employee status: "+str(y_pred[0]))
+    if y_pred[0] == 0:
+       st.success("Employee status: Stayed")
+    elif y_pred[0] == 1:
+       st.error("Employee status: Left")
 
  
 
